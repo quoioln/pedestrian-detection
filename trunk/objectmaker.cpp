@@ -71,7 +71,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	int iKey=0;
 
 	//	get *.bmp files in directory
-	if((hFile=_findfirst("F:/²âÊÔËØ²Ä/rawdata/*.png",&bmp_file))==-1L)
+	if((hFile=_findfirst("F:/²âÊÔËØ²Ä/rawdata/*.jpg",&bmp_file))==-1L)
 		printf("no *.bmp files in directory 'rawdata'\n");
 	else
 	{
