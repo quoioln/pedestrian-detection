@@ -71,13 +71,13 @@ int _tmain(int argc, _TCHAR* argv[])
 	int iKey=0;
 
 	//	get *.bmp files in directory
-	if((hFile=_findfirst("F:/≤‚ ‘Àÿ≤ƒ/rawdata/*.jpg",&bmp_file))==-1L)
+	if((hFile=_findfirst("F:\\≤‚ ‘Àÿ≤ƒ\\MIT_standard_person\\pedestrians128x64\\*.ppm",&bmp_file))==-1L)
 		printf("no *.bmp files in directory 'rawdata'\n");
 	else
 	{
 
 		//	init highgui
-		cvAddSearchPath("F:/≤‚ ‘Àÿ≤ƒ/rawdata");
+		cvAddSearchPath("F:\\≤‚ ‘Àÿ≤ƒ\\MIT_standard_person\\pedestrians128x64\\");
 		cvNamedWindow(window_name,1);
 		cvSetMouseCallback(window_name,on_mouse);
 
@@ -92,60 +92,62 @@ int _tmain(int argc, _TCHAR* argv[])
 		{
 			printf(" %-12s\n",bmp_file.name);
 
-			numOfRec=0;
+			numOfRec=1;
 			strPostfix="";
-			strPrefix="F:/≤‚ ‘Àÿ≤ƒ/rawdata/";
+			strPrefix="F:\\≤‚ ‘Àÿ≤ƒ\\MIT_standard_person\\pedestrians128x64\\";
 			strPrefix+=bmp_file.name;
-			//bmp_file.name = strPrefix.c_str();
-			image=cvLoadImage(strPrefix.c_str(),1);
+			strPostfix+=" "+IntToString(0)+" "+IntToString(0)+" "+IntToString(63)+" "+IntToString(127);
+			output << strPrefix << " "<< numOfRec << strPostfix <<"\n";
+			////bmp_file.name = strPrefix.c_str();
+			////image=cvLoadImage(strPrefix.c_str(),1);
 
-			//	work on current image
-			do
-			{
-				cvShowImage(window_name,image);
+			////	work on current image
+			//do
+			//{
+			//	cvShowImage(window_name,image);
 
-				// used cvWaitKey returns:
-				//	<Enter>=13		save added rectangles and show next image
-				//	<ESC>=27		exit program
-				//	<Space>=32		add rectangle to current image
-				//  any other key clears rectangle drawing only
-				iKey=cvWaitKey(0);
-				switch(iKey)
-				{
-				case 27:
-					cvReleaseImage(&image);
-					cvDestroyWindow(window_name);
-					return 0;
-				case 32:
-					numOfRec++;
-					// currently two draw directions possible:
-					//		from top left to bottom right or vice versa
-					if(roi_x0<roi_x1 && roi_y0<roi_y1)
-					{
-						printf("   %d. rect x=%d\ty=%d\twidth=%d\theight=%d\n",numOfRec,roi_x0,roi_y0,roi_x1-roi_x0,roi_y1-roi_y0);
-						// append rectangle coord to previous line content
-						strPostfix+=" "+IntToString(roi_x0)+" "+IntToString(roi_y0)+" "+IntToString(roi_x1-roi_x0)+" "+IntToString(roi_y1-roi_y0);
-					}
-					if(roi_x0>roi_x1 && roi_y0>roi_y1)
-					{
-						printf("   %d. rect x=%d\ty=%d\twidth=%d\theight=%d\n",numOfRec,roi_x1,roi_y1,roi_x0-roi_x1,roi_y0-roi_y1);
-						// append rectangle coord to previous line content
-						strPostfix+=" "+IntToString(roi_x1)+" "+IntToString(roi_y1)+" "+IntToString(roi_x0-roi_x1)+" "+IntToString(roi_y0-roi_y1);
-					}
-					break;
-				}
-			}
-			while(iKey!=13);
+			//	// used cvWaitKey returns:
+			//	//	<Enter>=13		save added rectangles and show next image
+			//	//	<ESC>=27		exit program
+			//	//	<Space>=32		add rectangle to current image
+			//	//  any other key clears rectangle drawing only
+			//	iKey=cvWaitKey(0);
+			//	switch(iKey)
+			//	{
+			//	case 27:
+			//		cvReleaseImage(&image);
+			//		cvDestroyWindow(window_name);
+			//		return 0;
+			//	case 32:
+			//		numOfRec++;
+			//		// currently two draw directions possible:
+			//		//		from top left to bottom right or vice versa
+			//		if(roi_x0<roi_x1 && roi_y0<roi_y1)
+			//		{
+			//			printf("   %d. rect x=%d\ty=%d\twidth=%d\theight=%d\n",numOfRec,roi_x0,roi_y0,roi_x1-roi_x0,roi_y1-roi_y0);
+			//			// append rectangle coord to previous line content
+			//			strPostfix+=" "+IntToString(roi_x0)+" "+IntToString(roi_y0)+" "+IntToString(roi_x1-roi_x0)+" "+IntToString(roi_y1-roi_y0);
+			//		}
+			//		if(roi_x0>roi_x1 && roi_y0>roi_y1)
+			//		{
+			//			printf("   %d. rect x=%d\ty=%d\twidth=%d\theight=%d\n",numOfRec,roi_x1,roi_y1,roi_x0-roi_x1,roi_y0-roi_y1);
+			//			// append rectangle coord to previous line content
+			//			strPostfix+=" "+IntToString(roi_x1)+" "+IntToString(roi_y1)+" "+IntToString(roi_x0-roi_x1)+" "+IntToString(roi_y0-roi_y1);
+			//		}
+			//		break;
+			//	}
+			//}
+			//while(iKey!=13);
 
-			// save to info file as later used for HaarTraining:
-			//	<rel_path>\bmp_file.name numOfRec x0 y0 width0 height0 x1 y1 width1 height1...
-			if(numOfRec>0 && iKey==13)
-			{
-				//append line
-				output << strPrefix << " "<< numOfRec << strPostfix <<"\n";
-			}
+			//// save to info file as later used for HaarTraining:
+			////	<rel_path>\bmp_file.name numOfRec x0 y0 width0 height0 x1 y1 width1 height1...
+			//if(numOfRec>0 && iKey==13)
+			//{
+			//	//append line
+			//	output << strPrefix << " "<< numOfRec << strPostfix <<"\n";
+			//}
 
-			cvReleaseImage(&image);
+			////cvReleaseImage(&image);
 		}
 		while(_findnext(hFile,&bmp_file)==0);
 
