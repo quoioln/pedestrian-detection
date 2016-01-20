@@ -1,0 +1,1 @@
+detect pedestrian in the video sequence,based on OpenCV library.
